@@ -1,7 +1,7 @@
 # demo-DAO-JDBC
 
 - Nesse projeto é realizada uma camada de acesso a dados de um pequeno sistema de vendedores e departamentos.
-Acesso ao banco de dados com JDBC usando o banco de dados MySql
+Acesso ao banco de dados MySql com JDBC.
 
 
 
