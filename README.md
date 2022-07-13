@@ -7,7 +7,7 @@ Acesso ao banco de dados MySql com JDBC.
 
 ## O que é JDBC?
 - É a sigla para Java DataBase Connectivity, que é uma API padrão do java para acesso a dados.
-- Em outras palavras, é uma biblioteca pedrão que já vem com o java para acessarmos algum banco de dados.
+- Em outras palavras, é uma biblioteca padrão que já vem com o java para acessarmos algum banco de dados.
 - O JDBC está no pacote java.sql e também no javax.sql (este ultimo é uma API suplementar para servidores)
 - Explicação pessoal: Em nossa aplicação java, o JDBC vai nos permitir programar o acesso a dados de um forma unica para todos os bancos de dados relacionais. E no momento que esse acesso ao banco de dados, que nós criamos, for realizado, o proprio JDBC vai escolher a forma aproproiada dado o banco de dados que queremos acessar(JDBC vai converter o que nós escrevemos para a linguagem nativa daquele banco de dados em questão).  "Nos permite escrever apenas uma vez, e rodar em "todos" bancos de dados relacionais, pois é o JDBC quem vai converter o que nós escrevemos para a linguagem nativa daquele banco de dados em questão".
 - O JDBC precisa do connector do banco de dados em questão para poder se comunicar com ele. Caso não estejamos usando um Gerenciador de dependencias, devemos baixar esse connector como uma biblioteca externa do java.
