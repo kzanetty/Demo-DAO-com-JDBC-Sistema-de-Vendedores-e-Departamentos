@@ -15,7 +15,7 @@ Acesso ao banco de dados MySql com JDBC.
 - Nesse exemplo, foi:
   - Criado um file chamado db.properties contendo os dados de conexão com o banco de dados.
   - Criada uma classe chamada DB e apartir dessa classe nós iremos implementar a conexões/desconexão com o banco de dados (usando os dados informado no file db.properties).
-```json
+```java
     public class DB {
 
     public static Connection conn = null;
