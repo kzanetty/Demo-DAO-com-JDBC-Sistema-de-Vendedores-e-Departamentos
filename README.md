@@ -1,76 +1,20 @@
-# demo-DAO-JDBC
+# Demonstração de DAO com JDBC
 
-- Nesse projeto é realizada uma camada de acesso a dados de um pequeno sistema de vendedores e departamentos.
-Acesso ao banco de dados MySql com JDBC.
-
+Neste projeto, é implementada uma camada de acesso a dados para um pequeno sistema de vendedores e departamentos. A aplicação utiliza JDBC para acesso ao banco de dados MySQL.
 
 
-## O que é JDBC?
-- É a sigla para Java DataBase Connectivity, que é uma API padrão do java para acesso a dados.
-- Em outras palavras, é uma biblioteca padrão que já vem com o java para acessarmos algum banco de dados.
-- O JDBC está no pacote java.sql e também no javax.sql (este ultimo é uma API suplementar para servidores)
-- Explicação pessoal: Em nossa aplicação java, o JDBC vai nos permitir programar o acesso a dados de um forma unica para todos os bancos de dados relacionais. E no momento que esse acesso ao banco de dados, que nós criamos, for realizado, o proprio JDBC vai escolher a forma aproproiada dado o banco de dados que queremos acessar(JDBC vai converter o que nós escrevemos para a linguagem nativa daquele banco de dados em questão).  "Nos permite escrever apenas uma vez, e rodar em "todos" bancos de dados relacionais, pois é o JDBC quem vai converter o que nós escrevemos para a linguagem nativa daquele banco de dados em questão".
-- O JDBC precisa do connector do banco de dados em questão para poder se comunicar com ele. Caso não estejamos usando um Gerenciador de dependencias, devemos baixar esse connector como uma biblioteca externa do java.
-![alt text](Demo-dao-jdbc/images/imgJDBC.png)
-- Nesse exemplo, foi:
-  - Criado um file chamado db.properties contendo os dados de conexão com o banco de dados.
-  - Criada uma classe chamada DB e apartir dessa classe nós iremos implementar a conexões/desconexão com o banco de dados (usando os dados informado no file db.properties).
-```java
-    public class DB {
+## JDBC 
+O JDBC, que significa Java Database Connectivity, é uma API padrão do Java para acesso a dados. É uma biblioteca incorporada ao Java que nos permite programar o acesso a dados de forma unificada para diferentes bancos de dados relacionais. O JDBC está presente nos pacotes java.sql e javax.sql (este último é uma API suplementar para servidores).
 
-    public static Connection conn = null;
+O JDBC depende do conector específico do banco de dados em uso para estabelecer a comunicação com ele. Se não estivermos usando um gerenciador de dependências, é necessário baixar e adicionar o conector como uma biblioteca externa do Java.
 
-    public static Connection getConnection() {
-        if(conn == null) {
-            try {
-                Properties props = loadProperties();
-                String url = props.getProperty("dburl");
-                conn = DriverManager.getConnection(url, props);
-            } catch (SQLException e){
-                throw new DbException(e.getMessage());
-            }
-        }
-        return conn;
-    }
+Neste exemplo, foram realizadas as seguintes etapas:
 
-    public static void closeConnection() {
-        if(conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                throw new DbException(e.getMessage());
-            }
-        }
-    }
+ - Criado um arquivo chamado db.properties, contendo os dados de conexão com o banco de dados.
+ - Criada uma classe chamada DB, a partir da qual implementaremos a conexão/desconexão com o banco de dados, utilizando os dados informados no arquivo db.properties.
+Em nossa aplicação, faremos uso frequente de três classes da API JDBC: Statement, PreparedStatement e ResultSet.
 
-    public static Properties loadProperties() {
-        try (FileInputStream fs = new FileInputStream("db.properties")) {
-            Properties props = new Properties();
-            props.load(fs);
-            return props;
-        } catch (IOException e) {
-            throw new DbException(e.getMessage());
-        }
-    }
-```
-  - Da nossa API do JDBC, nós vamos usar 3 classes com bastante frequência:
-    - Statement
-    - PreparadStatement
-    - ResultSet
+## DAO
+O padrão de projeto DAO (Data Access Object) é utilizado para cada entidade do projeto, definindo um objeto responsável pelo acesso aos dados relacionados a essa entidade. Por exemplo, teremos um objeto ClienteDao responsável pelo acesso aos dados dos clientes, um objeto ProdutoDao responsável pelo acesso aos dados dos produtos e assim por diante.
 
-
-
-## O que é DAO?
-  - padrão de projetos DAO(Data Access Object)
-  - Em resumo, da para dizer que a o padrão DAO define que cada entidade do nosso projeto, tera um objeto responsável por fazer o acesso aos dados relacionados a essa entidade.
-    - Por exemplo:
-    - Para a nossa entidade Cliente, havera um objeto ClienteDao responsável por fazer os acessos aos dados referente a clientes
-    - Para a nossa entidade Produto, havera um objeto ProdutoDao responsável por fazer os acessos aos dados referente a Produto
-    - Para a nossa entidade Pedido, havera um objeto PedidoDao responsável por fazer os acessos aos dados referente a Pedido
-  - Cada DAO é representado por uma interface.
-    -Pq interface? porque o nosso modo de acesso a dados pode mudar posteriormente ou mudar de banco de dados.
-    -Devido ao usado de uma interface, devemos definir como será nossa injeção de dependência. Nesse exercício, a injeção de dependência foi feita por meio do padrão de projeto Factory.
-  A interface ClienteDAO ira definir os métodos/operações que podem ser realizadas com os dados da nossa entidade Cliente, e ai nós teremos outra classe que ira implementar essa interface e implementar todas as operações dessa interface. O mesmo vale para as outras entidades do nosso projeto.
-
-
-![alt text](Demo-dao-jdbc/images/imgDAO-JDBC.png)
+Cada DAO é representado por uma interface. A escolha de uma interface permite que o modo de acesso a dados seja alterado posteriormente ou que sejam usados diferentes bancos de dados. A injeção de dependência é realizada por meio do padrão de projeto Factory nesse exercício. A interface ClienteDAO define os métodos/operações que podem ser realizados com os dados da entidade Cliente. Em seguida, temos uma classe que implementa essa interface e implementa todas as operações definidas por ela. O mesmo padrão se aplica às outras entidades do projeto.
